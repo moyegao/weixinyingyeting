@@ -1,0 +1,62 @@
+<template>
+  <div id="app">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <p>刷新次数: {{ count }}</p>
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
+      <router-view />
+    </van-pull-refresh>
+  </div>
+</template>
+
+<style>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
+
+<script>
+
+import { PullRefresh } from 'vant';
+export default {
+  name: 'app',
+  components: {
+    
+  },
+  data() {
+    return {
+      count: 0,
+      isLoading: false
+    }
+  },
+
+  methods: {
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功');
+        this.isLoading = false;
+        this.count++;
+      }, 500);
+    }
+  }
+}
+</script>

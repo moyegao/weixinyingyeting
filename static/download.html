@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img
+      v-if="is_weixin()"
+      src="@/static/img/download.jpg"
+      style="width:100%;height: 100%;"
+    />
+  </body>
+  <script type="text/javascript">
+    //判断是否是微信浏览器
+    function is_weixin() {
+      var ua = window.navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        console.log('微信浏览器');
+        return true;
+      } else {
+        console.log("不是微信浏览器");
+        return false;
+      }
+    }
+    function getDownloadUrl() {
+      var url = window.location.href
+      var downloadUrl = url.split('url=')
+      return downloadUrl[1]
+    }
+    function goDownload(){
+      if (this.is_weixin()) {
+      } else {
+        window.location.href = getDownloadUrl()
+      }
+    }
+    
+    goDownload()
+  </script>
+</html>
+<style>
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    margin: 0 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,907 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="VUM - An UI Framework for build mobile apps with vue.js"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=yes" />
+    <link rel="stylesheet" href="static/resert.css" />
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script
+      type="text/javascript"
+      src="https://webapi.amap.com/maps?v=1.4.15&key=691501e509b87392c0aeec4b7197a125&plugin=AMap.Geocoder,AMap.Autocomplete,AMap.PlaceSearch"
+    ></script>
+    <!-- <script type="text/javascript" src="static/js/pdf.js"></script>
+    <script type="text/javascript" src="static/js/pdf.worker.js"></script> -->
+    <title id="myTitle"></title>
+    <!-- 粤海水务 -->
+  </head>
+
+  <body ontouchstart="">
+    <div id="app">
+      <transition name="slide">
+        <!-- v-model="isLoading" @refresh="onRefresh" -->
+        <!-- <van-pull-refresh> -->
+        <router-view></router-view>
+        <!-- </van-pull-refresh> -->
+      </transition>
+    </div>
+    <!-- built files will be auto injected22 -->
+    <style>
+      /* #app .page{
+        display:none;
+      } */
+      /* 虚线 */
+      .van-divider--dashed{
+        text-align: center;
+        border-color: gray !important;
+        color: gray !important;
+        font-size: 18px !important;
+      }
+      .billdetail .yh-yingshou{
+        display:flex;
+        justify-content: space-between;
+      } 
+      .billdetail .yh-yingshou .van-field__label{
+        width:auto !important;
+      }
+      .billdetail .user-card-bg .van-cell .van-cell__value .van-field__control {
+        text-align: right;
+      }
+      .billdetail .user-card-bg .van-cell .van-field__label {
+        /* width : 150px; */
+        width: 140px;
+      }
+      .billdetail .user-card-bg .van-cell {
+        border-bottom: 1px solid #eee;
+      }
+      .billdetail .yh-yingshou .van-cell__title span {
+        font-size: 0.9rem;
+      }
+      .billdetail .yh-yingshou .van-cell__value .van-field__control {
+        font-size: 0.9rem;
+      }
+      .billdetail .yh-yingshou .van-cell__value .van-field__control:disabled {
+        color: #ed702d;
+        -webkit-text-fill-color: #ed702d;
+      }
+      .billdetail .yh-frist .van-cell__title span {
+        font-size: 0.8rem;
+      }
+      .billdetail .yh-frist .van-cell__value .van-field__control {
+        font-size: 0.8rem;
+      }
+      .user-details .van-field__label {
+        width: 120px;
+      }
+      .fast-pay .van-field__label {
+        text-align: left;
+      }
+      /* 图标颜色 */
+      .yh-my-blue .van-field__left-icon .van-icon:before {
+        color: #fb7f14;
+      }
+
+      .yh-my-red .van-field__left-icon .van-icon:before {
+        color: #4d78f9;
+      }
+
+      .progress-query .my-header .text-text-span {
+        padding: 3% 0 0 0 !important;
+      }
+
+      .complaint-report .van-uploader__preview,
+      .complaint-report .van-uploader__upload,
+      .leak-and-repairs .van-uploader__preview,
+      .leak-and-repairs .van-uploader__upload {
+        margin: 10px 10px 8px 0;
+      }
+
+      .complaint-report .van-radio__icon--checked + .van-radio__label,
+      .leak-and-repairs .van-radio__icon--checked + .van-radio__label {
+        color: #000;
+      }
+
+      .complaint-report .van-radio__label,
+      .leak-and-repairs .van-radio__label {
+        font-size: 14px !important;
+      }
+
+      .complaint-report .van-radio__icon,
+      .leak-and-repairs .van-radio__icon {
+        font-size: 16px;
+      }
+
+      .visit-pre .van-field__right-icon .van-icon,
+      .visit-pre .van-field__left-icon .van-icon,
+      .progress-query .van-field__right-icon .van-icon,
+      .progress-query .van-field__left-icon .van-icon,
+      .announcemen .van-field__right-icon .van-icon,
+      .announcemen .van-field__left-icon .van-icon {
+        color: #fff;
+      }
+
+      /* .visit-pre .van-field__control,
+    .announcemen .van-field__control,
+    .progress-query .van-field__control {
+      color: #fff;
+    } */
+
+      .visit-pre .van-field__label,
+      .announcemen .van-field__label,
+      .progress-query .van-field__label {
+        color: #fff;
+      }
+
+      .visit-pre .van-field__control,
+      .announcemen .van-field__control,
+      .progress-query .van-field__control {
+        color: #fff;
+      }
+      /*全局多页签跳转 */
+      .tab-container .buttons-tab {
+        box-shadow: 0 !important;
+      }
+
+      .complaint-report .tab-container .buttons-tab .button,
+      .leak-and-repairs .tab-container .buttons-tab .button {
+        width: 120px;
+        margin: 0 auto;
+      }
+
+      .button.active,
+      .button.active:active {
+        background-color: white;
+      }
+
+      .buttons-tab:after {
+        background-color: #fff !important;
+      }
+
+      .selfHelpMeterReading .kr-title .van-field__control {
+        color: #3193f6;
+      }
+
+      .selfHelpMeterReading .kr-flex .van-field__control {
+        color: #323232;
+        font-weight: 300;
+      }
+
+      /* 隐藏滚动条 */
+      ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        background-color: transparent;
+        display: none;
+      }
+
+      .selfHelpMeterReading .van-field__label {
+        width: 120px;
+      }
+
+      .van-radio .van-radio__label {
+        color: #989898;
+      }
+
+      .complaint-report .van-radio-group {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .complaint-report .van-radio-group .van-radio {
+        padding: 2% 1%;
+      }
+
+      .leak-and-repairs .van-radio__label {
+        padding: 1% 0;
+        /* font-weight: 600; */
+        color: #989898;
+        font-size: 12px;
+      }
+
+      .leakandrepairsDetail .add-pic .van-cell__value .van-field__control {
+        border: 0;
+      }
+
+      .leakandrepairsDetail .add-pic {
+        padding: 0 16px;
+      }
+
+      /* 水司组织树背景颜色 */
+      .company-area-active {
+        background: pink;
+      }
+
+      .meterReadingAccount .van-list .van-cell {
+        /* margin-top:1%; */
+      }
+
+      .billdetail .little_title {
+        font-size: 16px;
+      }
+
+      /* 自助抄表 */
+      .selfHelpMeterReading .header-two .col-100 .user-card {
+        padding: 2% 2% 0% 6%;
+      }
+
+      .personal-center .user-card-bg {
+        /* 个人中心 */
+        padding: 0;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        background-size: 102%;
+        -webkit-box-shadow: 1px 1px 5px 1px #888888;
+        box-shadow: 1px 1px 5px 1px #888888;
+      }
+
+      .leak-and-repairs .yh-content .yh-parent {
+        /* 报修报漏 */
+        margin-bottom: 1%;
+        margin-top: 1%;
+        padding: 10px 12px;
+        font-size: 15px;
+        font-weight: 300;
+        border-bottom: 1px solid #989898;
+      }
+
+      #yh-tab .tabs .tab .myHistory .yh-content {
+        /* 投诉举报 */
+        width: 98%;
+        margin-left: 1%;
+        margin-bottom: 1%;
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 15px;
+        -webkit-box-shadow: 1px 1px 5px 1px #888;
+        box-shadow: 1px 1px 5px 1px #888;
+      }
+
+      .van-list .van-cell {
+        padding: 0;
+      }
+
+      .van-cell:not(:last-child)::after {
+        border-bottom: 0;
+      }
+
+      #yh-tab {
+        /* height: 70%; */
+        /* overflow: auto; */
+      }
+
+      #yh-tab .tabs {
+        height: 90%;
+      }
+
+      #yh-tab .tabs .tab {
+        height: 100%;
+      }
+
+      #yh-tab .tabs .tab .myHistory {
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      #yh-tab .tabs .tab .myHistory .yh-content {
+        width: 96%;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+        margin-top: 2%;
+      }
+
+      .bill .van-pull-refresh {
+        height: 100%;
+      }
+
+      .bill .van-pull-refresh .van-pull-refresh__track {
+        height: 100%;
+      }
+
+      .leakandrepairsDetail .van-field__body .van-field__control {
+        overflow-y: hidden;
+      }
+
+      .leakandrepairsDetail .van-image {
+        margin-top: 2%;
+      }
+
+      .sales-network .koron_vant3 .van-field__right-icon {
+        color: #fff;
+      }
+
+      #kr-dialog .van-dialog__confirm .van-button__loading {
+        display: none;
+      }
+
+      .account-bind .kr-div .van-cell__title span {
+        font-size: 16px;
+      }
+
+      .fast-pay .kr-div .van-cell__title span {
+        font-size: 16px;
+      }
+
+      [class*="van-hairline"]::after {
+        border: none;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 0px;
+      }
+
+      .content-padded {
+        /* height: 100%; */
+      }
+
+      /* 居民用水申请 */
+      .peopleApply .van-cell:not(:last-child)::after {
+        border-bottom: 1px solid white;
+      }
+
+      .peopleApply .van-field__body {
+        /* border: 1px solid #d7d7d7; */
+        padding: 5px;
+      }
+
+      .peopleApply .van-cell--large {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #454547;
+        /* margin-left: 5px; */
+      }
+
+      .peopleApply .van-cell--large .van-cell__title {
+        margin: auto;
+        /* font-family: PingFang_Heavy; */
+        /* font-weight: bolder; */
+      }
+
+      .peopleApply .van-field__label {
+        width: 130px;
+      }
+
+      .peopleApply .van-uploader__preview {
+        width: 100%;
+      }
+
+      .peopleApply .van-uploader__upload {
+        margin: 0 auto;
+        border: 2px dashed #4da1ff;
+        border-radius: 10px;
+        width: 80%;
+        height: 6.8rem;
+      }
+
+      .peopleApply .van-uploader__preview-image {
+        margin: 0 auto;
+        border-radius: 10px;
+        width: 80%;
+        height: 6.8rem;
+      }
+
+      /* 居民用水申请 */
+      .compApply .van-cell:not(:last-child)::after {
+        border-bottom: 1px solid white;
+      }
+
+      .compApply .van-uploader__preview {
+        width: 100%;
+      }
+
+      .compApply .van-field__body {
+        /* border: 1px solid #d7d7d7; */
+        padding: 5px;
+      }
+
+      .compApply .van-cell--large {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #454547;
+        /* margin-left: 5px; */
+      }
+
+      .compApply .van-cell--large .van-cell__title {
+        margin: auto;
+        /* font-family: PingFang_Heavy; */
+        /* font-weight: bolder; */
+      }
+
+      .compApply .van-field__label {
+        width: 150px;
+      }
+
+      .compApply .van-uploader__upload {
+        margin: 0 auto;
+        border: 2px dashed #4da1ff;
+        border-radius: 10px;
+        width: 80%;
+        height: 6.8rem;
+      }
+
+      .compApply .van-uploader__preview-image {
+        margin: 0 auto;
+        border-radius: 10px;
+        width: 80%;
+        height: 6.8rem;
+      }
+
+      /* 报修报漏 */
+      .myMap .search-box .search-tips ul li {
+        font-size: 15px;
+      }
+
+      .myMap .search-box .search-box-wrapper input {
+        font-size: 16px;
+        text-indent: 25px;
+        border: 1px solid #d3d3d3;
+        height: 30px;
+        margin-left: 10px;
+        border-radius: 15px;
+      }
+
+      .myMap .search-box .search-btn {
+        width: 68px;
+        font-size: 15px;
+      }
+
+      .myMap .amap-page-container .kron-field .van-field__label {
+        width: auto;
+      }
+
+      /* 水价信息 */
+      .water-price-info .koron_search .van-field__control {
+        text-align: center;
+        font-size: 16px;
+      }
+
+      /* 水质报告 */
+      .quality-report .koron_search .van-field__control {
+        text-align: center;
+        font-size: 16px;
+      }
+
+      /* 通知公告 */
+      .announcemen .koron_search .van-field__control {
+        text-align: center;
+        font-size: 16px;
+      }
+
+      /* 营业网点 */
+      .sales-network .amap-overlay-text-container {
+        height: 30px;
+        line-height: 25px;
+        border-radius: 15px;
+        font-size: 14px;
+        border: none;
+        box-shadow: 3px 3px 9px 1px;
+      }
+
+      .sales-network .amap-overlay-text-container img {
+        vertical-align: middle;
+        margin-top: -5px;
+      }
+
+      .sales-network .van-tabs__line {
+        background-color: #1a73e8;
+      }
+
+      .sales-network .van-field__control {
+        text-align: center;
+      }
+
+      .sales-network .koron_vant1 .van-field__body {
+        border-right: 1px solid #8888;
+      }
+
+      .sales-network .koron_vant3 .van-field__control {
+        color: white;
+      }
+
+      .sales-network .koron_vant3 .van-field__right-icon {
+        margin-right: -12px;
+      }
+
+      /* 营业网点 去掉遮罩层 */
+      .sales-network .van-overlay {
+        /* display: none; */
+      }
+
+      .sales-network .van-tabs {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .sales-network .van-tabs__content {
+        height: 100%;
+        overflow: auto;
+      }
+
+      /* 进度查询 */
+      .progress-query .address .van-field__control {
+        color: white;
+        width: 100%;
+        text-align: center;
+        /* font-family: PingFang_Regular; */
+      }
+
+      .progress-query input::-webkit-input-placeholder {
+        /* WebKit browsers 适配谷歌 */
+        color: #bdcada;
+      }
+
+      .progress-query input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 适配火狐 */
+        color: #bdcada;
+      }
+
+      .progress-query input::-moz-placeholder {
+        /* Mozilla Firefox 19+ 适配火狐 */
+        color: #bdcada;
+      }
+
+      .progress-query input:-ms-input-placeholder {
+        /* Internet Explorer 10+  适配ie*/
+        color: #bdcada;
+      }
+
+      /* .progress-query .van-field__left-icon {
+      display: none;
+    } */
+
+      .progress-query .search .van-field__control {
+        /* color: white; */
+        /* font-family: PingFang_Regular; */
+      }
+
+      .progress-query .address .van-icon {
+        color: white;
+      }
+
+      .progress-query .search {
+        padding: 5px 16px;
+        width: 94%;
+        margin: 0 auto;
+      }
+
+      /* 添加联系人-删除按钮容器宽度 */
+      .contacts .van-swipe-cell__right {
+        width: 80px;
+      }
+
+      .selfHelpMeterReading .col-100 {
+        margin-left: 0%;
+        width: 100% !important;
+      }
+
+      .recharge .kr-list .item-inner {
+        width: 100%;
+      }
+
+      .recharge .kr-list .item-inner .item-media {
+        width: 20%;
+      }
+
+      .recharge .kr-list .item-inner .item-content {
+        width: 65%;
+      }
+
+      .recharge .kr-list .item-inner .item-input {
+        width: 10%;
+        text-align: center;
+        padding: 5% 0 0 0;
+      }
+
+      .recharge .kr-list .item-inner .item-input .kr-checkbox {
+        width: 80%;
+        height: 80%;
+      }
+
+      .list .item-inner {
+        /* padding: 0 0 0 2%; */
+        padding: 0 0 0 0;
+      }
+
+      .account-bind .list .item-inner {
+        padding: 0 0 0 2%;
+      }
+
+      .bill .list .item-inner,
+      .ele-invoices .list .item-inner {
+        padding: 0 0 0 0;
+      }
+
+      .list .item-media + .item-content {
+        margin-left: 1%;
+      }
+
+      .van-dialog .van-dialog__header {
+        padding: 12px 0;
+      }
+
+      .progress-query .search_content .van-field__body {
+        padding: 0;
+      }
+
+      .van-cell__value .van-field__body {
+        padding: 0 0 0 6%;
+      }
+
+      .selfHelpMeterReading
+        .kr-flex
+        .kr-title
+        .van-cell__value
+        .van-field__body {
+        padding: 0 0 0 8%;
+      }
+
+      .leakandrepairsDetail .van-cell__value .van-field__body {
+        padding: 0 0 0 0%;
+      }
+
+      .van-dialog .van-dialog__content .van-field__control {
+        width: 90%;
+        border: 1px solid #323232;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 16px;
+        height: 1.5rem;
+      }
+
+      .van-dialog .van-dialog__content .van-field__control:focus {
+        border: 1px solid greenyellow;
+      }
+
+      .leakandrepairsDetail .buttons-tab {
+        display: none;
+      }
+
+      .selfHelpMeterReading .van-uploader__upload {
+        border: 2px dashed #4da1ff;
+        border-radius: 10px;
+      }
+
+      .van-uploader__upload-icon {
+        color: #4da1ff;
+        font-size: 24px;
+      }
+
+      .upload .van-uploader__upload {
+        margin: 0 auto;
+        border: 2px dashed #4da1ff;
+        border-radius: 10px;
+        width: 88%;
+        height: 6.8rem;
+      }
+
+      .upload .van-uploader__preview-image {
+        margin: 0 auto;
+        /* border: 2px dashed #4da1ff; */
+        border-radius: 10px;
+        width: 88%;
+        height: 6.8rem;
+      }
+
+      .leakUpload .van-uploader__upload {
+        margin: 0 auto;
+        border: 2px dashed #4da1ff;
+        border-radius: 10px;
+        width: 88%;
+        height: 6.8rem;
+      }
+
+      .leakUpload .van-uploader__preview-image {
+        margin: 0 auto;
+        /* border: 2px dashed #4da1ff; */
+        border-radius: 10px;
+        width: 88%;
+        height: 6.8rem;
+      }
+
+      .contacts .van-field__label {
+        width: 100px !important;
+        /* font-weight: 600; */
+      }
+
+      .contacts .van-field__control {
+        /* font-weight: 600; */
+        font-size: 16px;
+      }
+
+      body,
+      html {
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        background: #fff;
+      }
+
+      a:link,
+      a:visited,
+      a:hover {
+        text-decoration: none;
+        /*超链接无下划线*/
+      }
+
+      .demos-title,
+      .demos-sub-title {
+        text-align: center;
+        font-size: 1.4rem;
+        color: #3cc51f;
+        font-weight: normal;
+        margin: 0.5rem 0;
+      }
+
+      .demos-sub-title {
+        font-size: 1.2rem;
+        margin: 0.4rem 0;
+      }
+
+      .demos-content-padded {
+        padding: 15px;
+      }
+
+      .demos-second-title {
+        text-align: center;
+        font-size: 24px;
+        color: #3cc51f;
+        font-weight: 400;
+        margin: 0 15%;
+      }
+
+      .page-content .list li {
+        border-bottom: 1px solid #ccc;
+      }
+
+      .page-content .list li:first-child {
+        border-top: 1px solid #ccc;
+      }
+
+      .page-content .list li .item-title {
+        height: 1.6rem;
+        line-height: 1.6rem;
+      }
+
+      footer {
+        text-align: center;
+        font-size: 14px;
+        padding: 20px;
+      }
+
+      footer a {
+        color: #999;
+        text-decoration: none;
+      }
+
+      .billdetail .col-100 .user-card-bg .list .table_box .item-inner {
+        padding: 0 0 0 0;
+      }
+
+      /* dw */
+      .pay .van-dialog .van-dialog__content {
+        text-align: center !important;
+      }
+
+      .pay .van-dialog .van-dialog__content input {
+        border: 1px solid #000;
+        height: 40px;
+        line-height: 40px;
+      }
+
+      /* 投诉举报 */
+      .complaint-report .tab-container .buttons-tab,
+      .leak-and-repairs .tab-container .buttons-tab {
+        /* box-shadow: 1px 1px 5px 1px #888; */
+      }
+
+      .complaint-report .tab-container .buttons-tab .button,
+      .leak-and-repairs .tab-container .buttons-tab .button {
+        /* font-family: PingFang_Bold; */
+        /* font-weight: 600; */
+      }
+
+      .complaint-report .tab-container .buttons-tab .button.active,
+      .leak-and-repairs .tab-container .buttons-tab .button.active {
+        border-bottom: 3px solid #3193f6;
+      }
+
+      /* 上传附件点击按钮边框 */
+      .van-uploader__upload {
+        border: 1px dashed #4da1ff;
+      }
+
+      /* 个人中心 */
+      .personal-center .list ul:before {
+        height: 0px;
+      }
+
+      .personal-center .list ul:after {
+        background-color: white;
+      }
+
+      .myMap .search-btn {
+        display: none !important;
+      }
+
+      .myMap .search-box .search-box-wrapper input {
+        border: none;
+        margin-left: 0px;
+        margin-bottom: -4px;
+      }
+
+      .myMap .map_content .amap-page-container .search-box {
+        border-radius: 15px;
+      }
+      .myMap .search-tips {
+        width: 100%;
+        border: none;
+      }
+      .myMap .search-box .search-tips ul li {
+        background: url("./static/img/zuobiao5.png") no-repeat 4px 9px;
+        padding-left: 29px;
+        box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+      }
+      /* 去掉高德地图水印 */
+      .amap-logo {
+        display: none !important;
+      }
+      .amap-copyright {
+        opacity: 0 !important;
+      }
+
+      /* 修改遮罩层透明度（目前全透明） */
+      /* .van-overlay{
+        background-color: rgba(0,0,0,0);
+      } */
+      /* 下拉选项加粗 */
+      .van-picker-column__item {
+        font-weight: bold;
+      }
+    </style>
+
+    <script>
+      // export default {
+      //   data() {
+      //     return {
+      //       count: 0,
+      //       isLoading: false
+      //     }
+      //   },
+
+      //   methods: {
+      //     onRefresh() {
+      //       setTimeout(() => {
+      //         this.$toast('刷新成功');
+      //         this.isLoading = false;
+      //       }, 500);
+      //     }
+      //   }
+      // }
+      window.onload = function() {
+        // 	   	改变title
+        setInterval(function() {
+          if (document.querySelector(".nav .title")) {
+            if (
+              document.title !== document.querySelector(".nav .title").innerText
+            ) {
+              document.title = document.querySelector(".nav .title").innerText;
+              //							移除nav
+              var navTitle = document.querySelector(".nav");
+              navTitle.parentNode.removeChild(navTitle);
+            }
+          }
+        }, 100);
+      };
+    </script>
+  </body>
+</html>
